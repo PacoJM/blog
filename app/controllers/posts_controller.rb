@@ -4,13 +4,17 @@ class PostsController < ApplicationController
 	end
 
 	def new
+		@post = Post.new
 	end
 
 	def create
 		@post = Post.new(params[:post].permit(:title, :text))
  
-  		@post.save
-  		redirect_to action: :show, id: @post.id
+  		if @post.save
+  			redirect_to action: :show, id: @post.id
+		else
+			render 'new'
+		end
 	end
 
  	def show
